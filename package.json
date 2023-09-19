@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for blog app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scorcism/blog-scor32k-backend.git"
+  },
+  "author": "Abhishek Pathak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scorcism/blog-scor32k-backend/issues"
+  },
+  "homepage": "https://github.com/scorcism/blog-scor32k-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "mongoose": "^7.5.2",
+    "nodemailer": "^6.9.5",
+    "nodemon": "^3.0.1",
+    "winston": "^3.10.0"
+  }
+}
