@@ -5,7 +5,10 @@ import userRoute from './routes/user.js'
 import postRoute from './routes/post.js'
 import { expressMiddleware } from "@apollo/server/express4";
 import createApolloGQLServer from "./graphql/index.js";
-let PORT = process.env.PORT || 8000;
+import dotenv from 'dotenv';
+dotenv.config();
+
+const PORT = process.env.PORT || 8000;
 
 
 async function init() {
@@ -18,8 +21,8 @@ async function init() {
         res.status(200).json({ message: "Working home" })
     })
 
-    app.use("/api/auth", userRoute)
-    app.use("/api/post", postRoute)
+    app.use("/api/admin/auth", userRoute)
+    app.use("/api/admin/post", postRoute)
 
     app.use("/api/graphql", expressMiddleware(await createApolloGQLServer()));
 

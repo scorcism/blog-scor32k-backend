@@ -1,17 +1,20 @@
 import { ApolloServer } from "@apollo/server";
-
+import { Bloggql } from './blogs/index.js'
+import { prismaClient } from "../lib/db.js";
 
 async function createApolloGQLServer() {
     const gqlServer = new ApolloServer({
         typeDefs: `
-        type Query {
-            hello: String
-          }
-        
+            ${Bloggql.typedef}
+
+            type Query{
+                ${Bloggql.queries}
+            }
         `,
+
         resolvers: {
             Query: {
-                hello: () => 'world',
+                getBlogs: async () => await prismaClient.post.findMany({ where: { published: true } })
             },
         }
     })
