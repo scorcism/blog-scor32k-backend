@@ -1,7 +1,7 @@
 import express from 'express'
 import { verifyUser } from '../middleware/verifyUser.js';
 import { getPosts } from '../controllers/adminUtils.js';
-import { validationResult } from "express-validator";
+import { ExpressValidator, body, validationResult } from "express-validator";
 import slugify from 'slugify';
 import multer from 'multer';
 import { v4 as uuid } from 'uuid';
@@ -23,14 +23,26 @@ const s3 = new AWS.S3({
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage })
 
-router.post("/", verifyUser, upload.single('image'), async (req, res) => {
+router.post("/", verifyUser, [
+    body("title", "Title req").isLength({ min: 5 }),
+    body("desc", "Desc req").isLength({ min: 5 }),
+    body("blog", "Blog req").isLength({ min: 5 }),
+], upload.single('image'), async (req, res) => {
+
+    const errors = validationResult(req.body);
+    // if(!errors.isEmpty()){
+    //     return res.status(400).json({
+    //         success: false,
+    //         message: errors
+    //     })
+    // }
 
     const { title, tags, desc, blog } = req.body;
 
     if (!title || !tags || !desc || !blog || title.length < 5 || desc.length < 5 || blog.length < 5) {
         return res.status(400).json({ success: false, message: "Missing Data" })
-
     }
+
     try {
 
         let userId = req.user.id;

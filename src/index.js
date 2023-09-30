@@ -16,6 +16,7 @@ async function init() {
 
     app.use(cors());
     app.use(express.json());
+    app.set('trust proxy', true);
 
     app.get("/", (req, res) => {
         res.status(200).json({ message: "Working home" })
