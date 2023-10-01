@@ -13,8 +13,11 @@ async function createApolloGQLServer() {
         `,
 
         resolvers: {
+            Blog: {
+                user: async (blog) => await prismaClient.user.findFirst({ where: { id: blog.userId } })
+            },
             Query: {
-                getBlogs: async () => await prismaClient.post.findMany({ where: { published: true } })
+                getBlogs: async () => await prismaClient.post.findMany({ where: { published: false } })
             },
         }
     })

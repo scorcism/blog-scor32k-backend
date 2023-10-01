@@ -12,7 +12,8 @@ export const typedef = `#graphql
         blog: String!
         imgUrl: String!,
         published: Boolean!
-        userId: User
+        userId: String!
+        user: User
     }
 `
 // tags: _tags,
