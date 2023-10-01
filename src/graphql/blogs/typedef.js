@@ -11,7 +11,10 @@ export const typedef = `#graphql
         desc: String!
         blog: String!
         imgUrl: String!,
+        tags: [String]!
         published: Boolean!
+        slug: String!
+        createdAt: String!
         userId: String!
         user: User
     }
