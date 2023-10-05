@@ -1,6 +1,6 @@
 import express from 'express'
 import { verifyUser } from '../middleware/verifyUser.js';
-import { getPosts } from '../controllers/adminUtils.js';
+import { getPosts, updatePostStatus } from '../controllers/adminUtils.js';
 import { ExpressValidator, body, validationResult } from "express-validator";
 import slugify from 'slugify';
 import multer from 'multer';
@@ -11,7 +11,7 @@ import { prismaClient } from '../lib/db.js'
 const router = express.Router();
 
 router.get("/", verifyUser, getPosts)
-
+router.put("/update-status/:id", verifyUser, updatePostStatus)
 
 
 const s3 = new AWS.S3({
@@ -30,12 +30,6 @@ router.post("/", verifyUser, [
 ], upload.single('image'), async (req, res) => {
 
     const errors = validationResult(req.body);
-    // if(!errors.isEmpty()){
-    //     return res.status(400).json({
-    //         success: false,
-    //         message: errors
-    //     })
-    // }
 
     const { title, tags, desc, blog } = req.body;
 
