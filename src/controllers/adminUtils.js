@@ -24,11 +24,17 @@ const getPosts = async (req, res) => {
 
 const updatePostStatus = async (req, res) => {
     try {
+
         let userId = req.user.id;
         let postId = req.params.id;
+        let status = req.headers["x-post-state"]
+
+        let currStatus;
+        (status === "true" ? currStatus = true : currStatus = false);
+
 
         let post = await prismaClient.post.findFirst({
-            where: { userId: userId, id: postId }
+            where: { userId: userId, id: postId, published: currStatus }
         })
 
         if (!post) {
@@ -41,11 +47,9 @@ const updatePostStatus = async (req, res) => {
                 userId: userId
             },
             data: {
-                published: true,
+                published: !currStatus,
             }
-        })  
-
-        console.log(updatePost)
+        })
 
         res.status(200).json({ success: true, message: "updated" })
 
